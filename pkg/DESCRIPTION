@@ -1,0 +1,16 @@
+Package: RWeather
+Type: Package
+Title: Interface to Google Weather API
+Version: 0.1
+Date: 2011-11-11
+Author: Paolo Sonego <paolo.sonego@gmail.com>
+Maintainer: Paolo Sonego <paolo.sonego@gmail.com>
+Description: This package provides programmatic access to
+    Google Weather API
+Depends:
+    R (>= 2.11.0),
+    XML
+License: GPL-2
+LazyLoad: yes
+Collate:
+    'rweather.r'
