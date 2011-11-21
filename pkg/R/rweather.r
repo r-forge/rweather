@@ -59,14 +59,16 @@ rweather <- function(address = "Trieste", message = FALSE){
 	if(identical(current_conditions$condition,forecast_conditions$condition[1])) forecast.msg =""
 	else forecast.msg = paste("But the forecast says ", tolower(forecast_conditions$condition[1]), ". ", sep="")
 	# if the temp in degrees c is below 20 i.e. cold
-	if(current_conditions$temp_c < 20) tmp.msg ="If you're going outside i'd wrap up warm. "
+	if(as.numeric(current_conditions$temp_c) < 20) tmp.msg ="If you're going outside i'd wrap up warm. "
 	# if the temp in degrees c is over 21 i.e. Warm / Hot
-	else if(current_conditions$temp_c >= 21) tmp.msg ="You should be ok without warm clothes today. "
+	else if(as.numeric(current_conditions$temp_c) >= 20) tmp.msg ="You should be ok without warm clothes today. "
 	# check to see if there is rain or storms forecast
-	if( current_conditions$condition=="rain"||current_conditions$condition=="storm"||
-		forecast_conditions$condition[1]=="rain"||forecast_conditions$condition[1]=="storm"
-	) storm.msg = "But don't forget to take an umbrella!" # da modificare basta che contenga la parola rain o storm!!!
-	else storm.msg =""
+	if( length(grep("rain",current_conditions$icon[1], value=F))|
+	    length(grep("storm",current_conditions$icon[1], value=F))|
+	    length(grep("rain",forecast_conditions$icon[1], value=F))|
+	    length(grep("storm",forecast_conditions$icon[1], value=F))) {
+		storm.msg = "But don't forget to take an umbrella!"
+	} else storm.msg =""
 	info.msg <- paste( "Weather summary for ", forecast_information$city, ":\n",
 		"The weather in ", forecast_information$postal_code, " is ", tolower(current_conditions$condition) , ". ",
 		forecast.msg, "The temperature is currently ", current_conditions$temp_c, "\u00B0C (",
