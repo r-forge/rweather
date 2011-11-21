@@ -4,6 +4,8 @@
 #'
 #' @param address A character containing the address of the location of interest
 #'
+#' @param language A character containing the ISO 639 2-letters code for the selected language (default 'en')
+#'
 #' @param message If TRUE (default FALSE) the function returns a message summarizing the weather forecast for the location of interest
 #'
 #' @return A list containing: \itemize{
@@ -19,9 +21,9 @@
 #' library("RWeather")
 #' rweather(address="Basovizza", message=TRUE)
 #'
-rweather <- function(address = "Trieste", message = FALSE){
+rweather <- function(address = "Trieste", language="en", message = FALSE){
 	# load the XML feeds for the Google Weather API
-	url = paste( "http://www.google.com/ig/api?weather=", URLencode(address), sep="" )
+	url = paste( "http://www.google.com/ig/api?weather=", URLencode(address), "&hl=", language, sep="" )
 	xml = xmlTreeParse(url, useInternalNodes=TRUE) # to get the xml data for the given location
 	# basic error check to see if we can get the current weather condition for the given location.
 	if( !is.null(xmlToList(xml)$weather$problem_cause) ) stop("Couldn't determine this location!\n")

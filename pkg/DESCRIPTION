@@ -1,7 +1,7 @@
 Package: RWeather
 Type: Package
 Title: Interface to Google Weather API
-Version: 0.1
+Version: 0.2
 Date: 2011-11-11
 Author: Paolo Sonego <paolo.sonego@gmail.com>
 Maintainer: Paolo Sonego <paolo.sonego@gmail.com>

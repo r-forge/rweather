@@ -2,11 +2,15 @@
 \alias{rweather}
 \title{Retrieve weather forecast for a given location using Google Weather API}
 \usage{
-  rweather(address = "Trieste", message = FALSE)
+  rweather(address = "Trieste", language = "en",
+    message = FALSE)
 }
 \arguments{
   \item{address}{A character containing the address of the
   location of interest}
+
+  \item{language}{A character containing the ISO 639
+  2-letters code for the selected language (default 'en')}
 
   \item{message}{If TRUE (default FALSE) the function
   returns a message summarizing the weather forecast for
