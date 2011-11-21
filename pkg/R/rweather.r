@@ -81,3 +81,45 @@ rweather <- function(address = "Trieste", language="en", message = FALSE){
 		return( invisible(output) )
 	} else return( output )
 }
+
+#' Retrieve countries and cities lists using Google Weather APIs
+#'
+#' This function will get countries and cities lists from Google Weather API
+#'
+#' @param country Either NULL or a character containing a 2-letters code for the selected country (e.g. 'JP')
+#'
+#' @return A data.frame containing either the names and iso_codes of the countries exposed by the APIs
+#' or the names, latitudes and longitudes of the cities of the selected country
+#'
+#' @export
+#'
+#' @examples
+#'
+#' library("RWeather")
+#' getCountries()
+#' getCountries(country="JP")
+#'
+getCountries <- function(country=NULL){
+	if(is.null(country)){
+		# url = paste( "http://www.google.com/ig/countries?output=xml&hl=", language, sep="" )
+		url = "http://www.google.com/ig/countries?output=xml"
+		xml = xmlTreeParse(url, useInternalNodes=TRUE)
+		countries <- data.frame( 
+			name=xpathSApply(xml,"//xml_api_reply/countries/country/name",xmlGetAttr,"data"),
+			iso_code=xpathSApply(xml,"//xml_api_reply/countries/country/iso_code",xmlGetAttr,"data")
+		)
+		output <- countries
+	} else {
+		# url= paste( "http://www.google.com/ig/cities?output=xml&country=", country, "&hl=", language, sep="" )
+		url = paste( "http://www.google.com/ig/cities?output=xml&country=", country, sep="" )
+		xml = xmlTreeParse(url, useInternalNodes=TRUE)
+		cities <- data.frame( 
+			name=xpathSApply(xml,"//xml_api_reply/cities/city/name",xmlGetAttr,"data"),
+			latitude_e6=xpathSApply(xml,"//xml_api_reply/cities/city/latitude_e6",xmlGetAttr,"data"),
+			longitude_e6=xpathSApply(xml,"//xml_api_reply/cities/city/longitude_e6",xmlGetAttr,"data")
+		)
+		output <- cities
+	}
+	return(output)
+}
+
