@@ -1,8 +1,8 @@
-\name{getCountries}
-\alias{getCountries}
+\name{getCountriesFromGoogle}
+\alias{getCountriesFromGoogle}
 \title{Retrieve countries and cities lists using Google Weather APIs}
 \usage{
-  getCountries(country = NULL)
+  getCountriesFromGoogle(country = NULL)
 }
 \arguments{
   \item{country}{Either NULL or a character containing a

@@ -1,2 +1,4 @@
-export(getCountries)
-export(rweather)
+export(getCountriesFromGoogle)
+export(getWeatherFromGoogle)
+export(getWeatherFromNOAA)
+export(getWeatherFromYahoo)

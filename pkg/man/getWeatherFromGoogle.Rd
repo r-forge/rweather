@@ -1,13 +1,16 @@
-\name{rweather}
-\alias{rweather}
+\name{getWeatherFromGoogle}
+\alias{getWeatherFromGoogle}
 \title{Retrieve weather forecast for a given location using Google Weather API}
 \usage{
-  rweather(address = "Trieste", language = "en",
-    message = FALSE)
+  getWeatherFromGoogle(location_id = "Trieste",
+    language = "en", message = FALSE)
 }
 \arguments{
-  \item{address}{A character containing the address of the
-  location of interest}
+  \item{location_id}{A character containing a zip code
+  (10001); city name, state (weather=woodland,PA); city
+  name, country (weather=london, england);
+  latitude/longitude(weather=,,,30670000,104019996) or
+  possibly other.}
 
   \item{language}{A character containing the ISO 639
   2-letters code for the selected language (default 'en')}
@@ -28,6 +31,6 @@
 }
 \examples{
 library("RWeather")
-rweather(address="Basovizza", message=TRUE)
+getWeatherFromGoogle(location_id="Basovizza", message=TRUE)
 }
 
