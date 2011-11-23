@@ -82,7 +82,7 @@ getWeatherFromGoogle <- function( location_id = "Trieste", language="en", messag
 		return( invisible(output) )
 	} else return( output )
 }
-
+#
 #' Retrieve countries and cities lists using Google Weather APIs
 #'
 #' This function will get countries and cities lists from Google Weather API
@@ -153,8 +153,6 @@ getCountriesFromGoogle <- function( country=NULL ){
 #' getWeatherFromYahoo("10001")
 #'
 getWeatherFromYahoo <- function( location_id ="10001" , units = "metric", message = FALSE ){
-	# YAHOO_WEATHER_URL    = 'http://xml.weather.yahoo.com/forecastrss?p=%s&u=%s'
-	# YAHOO_WEATHER_NS     = 'http://xml.weather.yahoo.com/ns/rss/1.0'
 	# load the RSS feeds for the Yahoo API
 	weather.url = paste( "http://xml.weather.yahoo.com/forecastrss?p=", URLencode(location_id), "&u=", units, sep="" )
 	xml = xmlTreeParse(weather.url, useInternalNodes=TRUE) # to get the xml data for the given location
@@ -206,22 +204,21 @@ getWeatherFromYahoo <- function( location_id ="10001" , units = "metric", messag
 		condition=xpathSApply(xml,"//channel/item/yweather:forecast ", xmlGetAttr, "text"),
 		stringsAsFactors = FALSE
 	)
-	# return( list(current_condition=current_condition, forecasts=forecasts) )
 	output <- list(current_condition=current_condition, forecasts=forecasts)
 	# message
 	# if the temp in degrees c is below 20 i.e. cold
-	# if(as.numeric(current_observation$temp_c) < 20) tmp.msg ="If you're going outside i'd wrap up warm. "
-	# # if the temp in degrees c is over 21 i.e. Warm / Hot
-	# else if(as.numeric(current_observation$temp_c) >= 20) tmp.msg ="You should be ok without warm clothes today. "
-	# # check to see if there is rain or storms forecast
-	# if( length(grep("rain", tolower(current_observation$condition), value=F))|
-	#     length(grep("storm", tolower(current_observation$condition), value=F)) ){
-	# 	storm.msg = "But don't forget to take an umbrella!"
-	# } else storm.msg =""
+	if(as.numeric(current_condition$condition$temp) < 68) tmp.msg ="If you're going outside i'd wrap up warm. "
+	# if the temp in degrees c is over 21 i.e. Warm / Hot
+	else if(as.numeric(current_condition$condition$temp) >= 68) tmp.msg ="You should be ok without warm clothes today. "
+	# check to see if there is rain or storms forecast
+	if( length(grep("rain", tolower(current_condition$condition$text), value=F))|
+	    length(grep("storm", tolower(current_condition$condition$text), value=F)) ){
+		storm.msg = "But don't forget to take an umbrella!\n"
+	} else storm.msg ="\n"
 	info.msg <- paste( "Weather summary for ", current_condition$location$city, ":\n",
 		"The weather in ", current_condition$location$city, " is ", tolower(current_condition$condition$text) , ". ",
-		"The temperature is currently ", current_condition$condition$temp,"\u00B0F.\nHumidity is ", current_condition$atmosphere$humidity,
-		". ", "\n", sep="" 
+		"The temperature is currently ", current_condition$condition$temp,"\u00B0F.\n", tmp.msg,". Humidity is ", 
+		current_condition$atmosphere$humidity, "%.\n", storm.msg, sep="" 
 	)
 	if (message) {
 		cat(info.msg)
@@ -235,7 +232,7 @@ getWeatherFromYahoo <- function( location_id ="10001" , units = "metric", messag
 #' This function will get the weather forecast conditions for a given station
 #'
 #' @param station_id the ID of the weather station near the necessary location
-#' To find your station ID, perform the following steps:
+#' To find your station ID, open this URL: http://www.weather.gov/xml/current_obs/seek.php?state=az&Find=Find
 #' \itemize{
 #'     \item Open this URL: http://www.weather.gov/xml/current_obs/seek.php?state=az&Find=Find
 #'     \item Select the necessary state state. Click 'Find'.
