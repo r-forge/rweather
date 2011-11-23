@@ -218,7 +218,7 @@ getWeatherFromYahoo <- function( location_id ="10001" , units = "metric", messag
 	info.msg <- paste( "Weather summary for ", current_condition$location$city, ":\n",
 		"The weather in ", current_condition$location$city, " is ", tolower(current_condition$condition$text) , ". ",
 		"The temperature is currently ", current_condition$condition$temp,"\u00B0F.\n", tmp.msg,". Humidity is ", 
-		current_condition$atmosphere$humidity, "%.\n", storm.msg, sep="" 
+		current_condition$atmosphere$humidity, "%. ", storm.msg, sep="" 
 	)
 	if (message) {
 		cat(info.msg)
@@ -282,7 +282,7 @@ getWeatherFromNOAA <- function( station_id ="KJFK", message = FALSE ){
 	info.msg <- paste( "Weather summary for ", current_observation$location, ":\n",
 		"The weather in ", current_observation$location, " is ", tolower(current_observation$condition) , ". ",
 		"The temperature is currently ", current_observation$temp_c, "\u00B0C (",
-		current_observation$temp_f,"\u00B0F).\n", tmp.msg, current_observation$humidity, ". ", storm.msg, "\n", sep="" 
+		current_observation$temp_f,"\u00B0F).\n", tmp.msg, "Humidity: ",current_observation$humidity, "%. ", storm.msg, "\n", sep="" 
 	)
 	if (message) {
 		cat(info.msg)
