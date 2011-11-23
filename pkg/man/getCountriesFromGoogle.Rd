@@ -19,7 +19,7 @@
 }
 \examples{
 library("RWeather")
-getCountries()
-getCountries(country="JP")
+getCountriesFromGoogle()
+getCountriesFromGoogle(country="JP")
 }
 
