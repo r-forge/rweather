@@ -25,7 +25,9 @@
   for a given station
 }
 \examples{
+\dontrun{
 library("RWeather")
 getWeatherFromNOAA(station_id="KJFK") # current observation for New York
+}
 }
 

@@ -30,7 +30,9 @@
   for a given location
 }
 \examples{
+\dontrun{
 library("RWeather")
 getWeatherFromGoogle(location_id="Basovizza", message=TRUE)
+}
 }
 

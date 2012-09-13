@@ -33,7 +33,9 @@
   for a given location
 }
 \examples{
+\dontrun{
 library("RWeather")
 getWeatherFromYahoo("10001")
+}
 }
 

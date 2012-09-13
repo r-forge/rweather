@@ -18,8 +18,10 @@
   Google Weather API
 }
 \examples{
+\dontrun{
 library("RWeather")
 getCountriesFromGoogle()
 getCountriesFromGoogle(country="JP")
+}
 }
 
